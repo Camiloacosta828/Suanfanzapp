@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   logout() {
-    window.localStorage.clear();
-    window.location.href = '';
+    //window.localStorage.clear();
+    window.location.href = 'login';
   }
 }
