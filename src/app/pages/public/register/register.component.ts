@@ -45,9 +45,13 @@ export class RegisterComponent implements OnInit {
     //this.authService.login(user);
     
     window.localStorage.setItem('user', JSON.stringify(this.userForm.value));
-    this.router.navigate(['/']);
+    if(this.userForm.value.email == ""){
+      console.log("error!");
+      this.router.navigate(['/register']);
+    }else{
+      this.router.navigate(['/']);
+    }
     users.push(this.userForm.value);
-    console.log(users);
 
   }
 
