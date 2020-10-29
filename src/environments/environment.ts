@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlCodes: 'https://countriesnow.space/api/v0.1/countries/codes'
+  urlCodes: 'https://countriesnow.space/api/v0.1/countries/codes',
+  urlApi: 'http://localhost:3000/'
 };
 
 /*

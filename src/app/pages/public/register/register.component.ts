@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { CodesPhoneI } from 'src/app/shared/interfaces/CodesPhoneI';
+import { CodesPhoneI } from "src/app/shared/interfaces/CodesPhoneI";
 import { UserI } from "src/app/shared/interfaces/UserI";
 import { AuthService } from "src/app/shared/services/auth.service";
-import { CodesService } from 'src/app/shared/services/codes.service';
+import { CodesService } from "src/app/shared/services/codes.service";
+import { PersonService } from "src/app/shared/services/person.service";
 
 @Component({
   selector: "app-register",
@@ -12,7 +13,6 @@ import { CodesService } from 'src/app/shared/services/codes.service';
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
-
   codesPhone: CodesPhoneI[] = [];
   selectedCode: CodesPhoneI;
 
@@ -26,7 +26,12 @@ export class RegisterComponent implements OnInit {
     select: new FormControl(""),
   });
 
-  constructor(private router: Router, private authService: AuthService, private codesService: CodesService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private codesService: CodesService,
+    private personService: PersonService
+  ) {}
 
   ngOnInit(): void {
     this.getPlacesCode();
@@ -44,11 +49,11 @@ export class RegisterComponent implements OnInit {
       name: "",
     };
 
-    console.log(this.userForm);
-
-    //this.authService.login(user);
-
-    //this.router.navigate(['/']);
+    this.personService.savePerson(user).subscribe(data=>{
+      console.log(data);
+      alert("Usuario creado existosamente")
+    })
+    this.goToLogin();
   }
 
   goToLogin() {
@@ -56,9 +61,10 @@ export class RegisterComponent implements OnInit {
   }
 
   getPlacesCode() {
-    this.codesService.getCodes().subscribe(data=>{
+    this.codesService.getCodes().subscribe((data) => {
       this.codesPhone = data.data;
-    })
+    });
   }
-}
 
+  save() {}
+}

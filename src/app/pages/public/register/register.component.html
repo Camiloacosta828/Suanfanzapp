@@ -94,9 +94,10 @@
                 name="miselect"
                 id="miSelect"
                 formControlName="select"
+                [(ngModel)]="selectedCode"
               >
                 <option
-                  [value]="codePhone"
+                  [value]="codePhone.dial_code"
                   *ngFor="let codePhone of codesPhone"
                 >
                   {{ codePhone.name }}
