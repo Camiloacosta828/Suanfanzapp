@@ -14,7 +14,10 @@ export class PersonService {
     this.url = environment.urlApi + 'person/';
   }
 
-  public savePerson(person: UserI): Observable<any>{
-    return this.httpClient.post(this.url+ 'save', person);
+  public savePerson(person): Observable<any> {
+    return this.httpClient.post(this.url + 'save', person);
+  }
+  public login(person): Observable<any> {
+    return this.httpClient.post(this.url + 'save', person);
   }
 }

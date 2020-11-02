@@ -18,12 +18,13 @@ export class RegisterComponent implements OnInit {
 
   userForm = new FormGroup({
     email: new FormControl("", Validators.required),
-    username: new FormControl("", Validators.required),
     name: new FormControl("", Validators.required),
-    lname: new FormControl("", Validators.required),
+    lastname: new FormControl("", Validators.required),
     password: new FormControl("", Validators.required),
-    favNumber: new FormControl(""),
-    select: new FormControl(""),
+    confirmedPassword: new FormControl("", Validators.required),
+
+    number: new FormControl(""),
+    id_number_format: new FormControl(""),
   });
 
   constructor(
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private codesService: CodesService,
     private personService: PersonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getPlacesCode();
@@ -39,21 +40,17 @@ export class RegisterComponent implements OnInit {
 
   doRegister(e) {
     e.preventDefault();
+    if (this.userForm.get('confirmedPassword').value === (this.userForm.get('password').value)) {
+      this.personService.savePerson(this.userForm.value).subscribe(data => {
+        alert("Usuario creado existosamente")
+        this.goToLogin();
 
-    const user: UserI = {
-      email: "",
-      username: "",
-      favNumber: 0,
-      lname: "",
-      password: "",
-      name: "",
-    };
+      })
+    } else {
+      alert("No Coincide la contraseña")
 
-    this.personService.savePerson(user).subscribe(data=>{
-      console.log(data);
-      alert("Usuario creado existosamente")
-    })
-    this.goToLogin();
+    }
+    console.log(this.userForm.value);
   }
 
   goToLogin() {
@@ -66,5 +63,5 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  save() {}
+  save() { }
 }

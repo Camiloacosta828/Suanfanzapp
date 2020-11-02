@@ -1,8 +1,8 @@
 export interface UserI {
     email: string;
-    username: string;
     name: string;
-    lname: string;
+    lastname: string;
     password?: string;
-    favNumber?: number;
+    number?: number;
+
 }

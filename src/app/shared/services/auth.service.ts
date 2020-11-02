@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { UserI } from '../interfaces/UserI';
 
 @Injectable({
@@ -7,15 +10,13 @@ import { UserI } from '../interfaces/UserI';
 export class AuthService {
 
   user: UserI | undefined;
+  url: string;
+  constructor(public httpClient: HttpClient) {
+    this.url = environment.urlApi + 'person/';
+  }
 
-  constructor() { }
-
-  login(user: UserI) {
-    const passKey = "suanfanzon";
-    if (user.password === passKey) {
-      this.user = user;
-      window.localStorage.setItem('user', JSON.stringify(this.user));
-    }
+  public login(person): Observable<any> {
+    return this.httpClient.post(this.url + 'login', person);
   }
 
   isLogged() {
