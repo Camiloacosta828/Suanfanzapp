@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { Router } from "@angular/router";
 import { CodesPhoneI } from "src/app/shared/interfaces/CodesPhoneI";
 import { UserI } from "src/app/shared/interfaces/UserI";
@@ -15,42 +20,51 @@ import { PersonService } from "src/app/shared/services/person.service";
 export class RegisterComponent implements OnInit {
   codesPhone: CodesPhoneI[] = [];
   selectedCode: CodesPhoneI;
-
-  userForm = new FormGroup({
-    email: new FormControl("", Validators.required),
-    name: new FormControl("", Validators.required),
-    lastname: new FormControl("", Validators.required),
-    password: new FormControl("", Validators.required),
-    confirmedPassword: new FormControl("", Validators.required),
-
-    number: new FormControl(""),
-    id_number_format: new FormControl(""),
-  });
+  registerForm: FormGroup;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private codesService: CodesService,
-    private personService: PersonService
-  ) { }
+    private personService: PersonService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.getPlacesCode();
+    this.registerForm = this.formBuilder.group(
+      {
+        email: [
+          "",
+          [
+            Validators.required,
+            Validators.pattern(
+              "[a-z0-9._%+!$&*=^|~#%'`?{}/-]+@([a-z0-9-]+.){1,}([a-z]{2,16})"
+            ),
+          ],
+        ],
+        name: ["", [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
+        lastname: ["", [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
+        password: ["", Validators.required],
+        confirmPassword: ["", Validators.required],
+        number: ["", [Validators.required, Validators.pattern("[0-9]*")]],
+      },
+      { validator: this.checkPasswords }
+    );
   }
 
   doRegister(e) {
     e.preventDefault();
-    if (this.userForm.get('confirmedPassword').value === (this.userForm.get('password').value)) {
-      this.personService.savePerson(this.userForm.value).subscribe(data => {
-        alert("Usuario creado existosamente")
-        this.goToLogin();
-
-      })
-    } else {
-      alert("No Coincide la contraseña")
-
+    if (this.registerForm.valid) {
+      this.personService
+        .savePerson(this.registerForm.value)
+        .subscribe((data) => {
+          alert("Usuario creado existosamente");
+          this.goToLogin();
+        });
+    } else{
+      alert("Verifique los campos");
     }
-    console.log(this.userForm.value);
   }
 
   goToLogin() {
@@ -63,5 +77,11 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  save() { }
+  save() {}
+
+  checkPasswords(group: FormGroup) {
+    let pass = group.get("password").value;
+    let confirmPass = group.get("confirmPassword").value;
+    return pass === confirmPass ? null : { notSame: true };
+  }
 }

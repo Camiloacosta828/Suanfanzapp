@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/Suanfanzapp/",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
