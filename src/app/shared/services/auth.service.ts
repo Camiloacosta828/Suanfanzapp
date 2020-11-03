@@ -18,6 +18,7 @@ export class AuthService {
   public login(person): Observable<any> {
     return this.httpClient.post(this.url + 'login', person);
   }
+  
 
   isLogged() {
     const user = window.localStorage.getItem('user') || undefined;

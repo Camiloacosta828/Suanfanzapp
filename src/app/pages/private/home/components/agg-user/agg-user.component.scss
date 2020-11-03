@@ -1,0 +1,36 @@
+#content{
+    display: none;
+    background-color: #EDEDED;
+    width: 30%;
+    height: 15%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    justify-content: space-around;
+    .correo{
+        background-color: #EDEDED;
+        width: 90%;
+        height: 25%;
+
+    }
+    .btns{
+        display: flex;
+        background-color: #EDEDED;
+        width: 70%;
+        height: 30%;
+        justify-content: space-around;
+        #agregarContacto{
+            height: 80%;
+        }
+        #exit{
+            height: 80%;
+            width: 30%;
+        }
+    }
+}

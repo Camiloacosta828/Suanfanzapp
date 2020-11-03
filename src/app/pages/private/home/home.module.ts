@@ -5,6 +5,7 @@ import { InboxChatComponent } from './components/inbox-chat/inbox-chat.component
 import { ChatAreaComponent } from './components/chat-area/chat-area.component';
 import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 import { FormsModule } from '@angular/forms';
+import { AggUserComponent } from './components/agg-user/agg-user.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     InboxChatComponent,
     ChatAreaComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    AggUserComponent
   ],
   imports: [
     CommonModule, FormsModule

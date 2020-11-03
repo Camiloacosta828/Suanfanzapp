@@ -100,4 +100,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  mostrar(){
+    document.getElementById("menuMore").style.display = "flex";
+    document.getElementById("leftMore").style.display = "none";
+    document.getElementById("leftMore2").style.display = "flex";
+  };
+  
+  cerr(){
+    document.getElementById("menuMore").style.display = "none";
+    document.getElementById("leftMore").style.display = "flex";
+    document.getElementById("leftMore2").style.display = "none";
+  }
+
+  cerrContact(){
+    document.getElementById("content").style.display = "flex";
+    this.cerr();
+  }
+
+  aggContact(){
+    
+  }
+
+
 }
